@@ -7,11 +7,20 @@ router.get("/", (req: Request, res: Response) => {
     req.header("x-forwarded-for") ?? req.connection.remoteAddress;
   const language: string = req.header("Accept-Language");
   const system: string = req.header("User-Agent");
-  res.json({
-    ipaddress: ip,
+
+  class Output {
+    ip?: string;
+    language?: string;
+    system: string;
+  }
+
+  const output: Output = {
+    ip,
     language,
-    software: system,
-  });
+    system,
+  };
+
+  res.json(output);
 });
 
 export default router;
